@@ -1,0 +1,10 @@
+CHIP MuxTest {
+    IN  a[16], b[16], sel;
+    OUT out[16];
+
+    PARTS:
+    Mux16(a=a,b=b,sel=sel,out=out[0..15]);
+    //Mux(a=a,b=b,sel=sel[0],out=outab);
+    //Mux(a=c,b=d,sel=sel[0],out=outcd);
+    //Mux(a=outab,b=outcd,sel=sel[1],out=out);
+}
