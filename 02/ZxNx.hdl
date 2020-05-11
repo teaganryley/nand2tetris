@@ -26,50 +26,21 @@
 // if (out == 0) set zr = 1
 // if (out < 0) set ng = 1
 
-CHIP ALU {
+CHIP ZxNx {
     IN  
-        x[16], y[16],  // 16-bit inputs        
+        x[16],  // 16-bit inputs        
         zx, // zero the x input?
-        nx, // negate the x input?
-        zy, // zero the y input?
-        ny, // negate the y input?
-        f,  // compute out = x + y (if 1) or x & y (if 0)
-        no; // negate the out output?
+        nx; // negate the x input?
 
     OUT 
-        out[16], // 16-bit output
-        zr, // 1 if (out == 0), 0 otherwise
-        ng; // 1 if (out < 0),  0 otherwise
+        out[16];
 
     PARTS:
-   // zx 
-   Mux16(a=x, b=false, sel=zx, out=outzx);
+    // zx 
+    Mux16(a=x, b=false, sel=zx, out=outx);
    
-   // nx 
-   Not16(in=outzx, out=notx);
-   Mux16(a=outzx, b=notx, sel=nx, out=outnx);
-   
-   // zy
-   Mux16(a=y, b=false, sel=zy, out=outzy);
-
-   // ny
-   Not16(in=outzy, out=noty);
-   Mux16(a=outzy, b=noty, sel=ny, out=outny);
-
-   // f function select
-   // two's complement addition
-   Add16(a=outnx, b=outny, out=addxy);
-   And16(a=outnx, b=outny, out=andxy);
-   Mux16(a=andxy, b=addxy, sel=f, out=outf);
-
-   // 'no' output negation, plus ng
-   Not16(in=outf, out=notf);
-   Mux16(a=outf, b=notf, sel=no, out=out, out[0..7]=zr1, out[8..15]=zr2, out[15]=ng);
-
-   // zr output comparison
-   Or8Way(in=zr1, out=zor1);
-   Or8Way(in=zr2, out=zor2);
-   Or(a=zor1, b=zor2, out=outzor);
-   Not(in=outzor, out=zr);
-
+    // nx 
+    Not16(in=outx, out=notx);
+    //Inc16(in=notx, out=negx);
+    Mux16(a=outx, b=notx, sel=nx, out=out);
 }
