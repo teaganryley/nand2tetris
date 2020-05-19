@@ -1,4 +1,4 @@
-#NAND2TETRIS
+# NAND2TETRIS
 
 These files are part of www.nand2tetris.org and the book "The Elements of Computing Systems" by Nisan and Schocken, MIT Press.
 
