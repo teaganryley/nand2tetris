@@ -8,19 +8,19 @@
 	M=0
 
 (LOOP)
-	// check loop condition
+	// If (i-multiplier)>0 goto END
 	@i
 	D=M	
 	@R1	
-	D=D-M	// this line matters
+	D=D-M
 	@END
-	D;JEQ	// If (i-multiplier)>0 goto END
+	D;JEQ
 	
 	// if loop condition holds, we add the multiplicand to the product once
 	@R0
 	D=M			
 	@R2
-	M=M+D	//does this compile?
+	M=M+D
 	
 	//increment i and jump to beginning of LOOP
 	@i
@@ -31,5 +31,3 @@
 (END)
 	@END
 	0;JMP	// Infinite loop, how we terminate HACK ASM programs
-
-	// TODO: 1 * 0 and 0 * 1, 1 * 1
